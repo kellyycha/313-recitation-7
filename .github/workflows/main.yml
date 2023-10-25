@@ -27,15 +27,10 @@ jobs:
           pipenv run pytest
   format:
     name: black-action
-    on: [push, pull_request]
-    jobs:
-      linter_name:
-        name: Run black formatter
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v2
-          - uses: rickstaa/action-black@v1.3.1
-            with:
-              black_args: ". --check"
-      
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ickstaa/action-black@v1.3.1
+        with:
+          black_args: ". --check"
 
