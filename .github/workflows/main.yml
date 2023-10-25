@@ -2,9 +2,6 @@ name: build
 on: push
 
 jobs:
-  format:
-    - name: Run black formatter
-      uses: rickstaa/action-black@v1.3.1
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -28,3 +25,20 @@ jobs:
       - name: Run test suite
         run: |
           pipenv run pytest
+
+  format:
+    name: black-action
+    on: [push, pull_request]
+    jobs:
+      linter_name:
+        name: runner / black formatter
+        runs-on: ubuntu-latest
+        steps:
+          - name: Run black formatter
+            uses: rickstaa/action-black@v1.3.1
+          - uses: actions/checkout@v2
+          - uses: rickstaa/action-black@v1
+            with:
+              black_args: ". --check"
+      
+
